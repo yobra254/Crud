@@ -30,51 +30,52 @@ class DatabaseHelper {
   Future<Database> initialeDatabase() async {
     String directory = await getDatabasesPath();
     String path = directory + 'notes.db';
-    var notesDatabase = openDatabase(, version: 1, onCreate: _createDB);
+    var notesDatabase = openDatabase(path, version: 1, onCreate: _createDB);
     return notesDatabase;
   }
 
   void _createDB(Database db, int version) async {
-    await db.execute('CREATE TABLE $tableName($noteId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,$noteTitle TEXT,$noteDesc TEXT)');
+    await db.execute(
+        'CREATE TABLE $tableName($noteId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,$noteTitle TEXT,$noteDesc TEXT)');
   }
 
-  Future<List<Map<String, dynamic>>> getAllNotes() async{
+  Future<List<Map<String, dynamic>>> getAllNotes() async {
     Database db = await this.database;
     var result = db.rawQuery('SELECT * FROM $tableName');
     return result;
   }
 
-  Future<int> inserNote(Note note) async{
+  Future<int> insertNote(Note note) async {
     Database db = await this.database;
     var result = db.insert(tableName, note.toMap());
-    return result; 
-  }
-
-  Future<int> updateNote(int id, Note note) async{
-    Database db = await this.database;
-    var result = db.rawUpdate(
-      'UPDATE $tableName SET $noteTitle=?, $noteDesc=? WHERE $noteId=?',
-    [note.title, note.description, id]);
     return result;
   }
 
-  Future<int> deleteNote(int id) async{
+  Future<int> updateNote(int id, Note note) async {
+    Database db = await this.database;
+    var result = db.rawUpdate(
+        'UPDATE $tableName SET $noteTitle=?, $noteDesc=? WHERE $noteId=?',
+        [note.title, note.description, id]);
+    return result;
+  }
+
+  Future<int> deleteNote(int id) async {
     Database db = await this.database;
     var result = db.delete(tableName, where: '$noteId=?', whereArgs: [id]);
     return result;
   }
 
-  Future<int?> getNoteCount() async{
+  Future<int?> getNoteCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> result =
-    await db.query('SELECT 8 FROM $tableName');
+        await db.query('SELECT 8 FROM $tableName');
     int? res = Sqflite.firstIntValue(result);
   }
 
-  Future <List<Note>> getListNote() async {
+  Future<List<Note>> getListNote() async {
     List<Note> notes = [];
-    List <Map<String, dynamic>> result = await this.getAllNotes();
-    for (Map<String, dynamic> mp in result){
+    List<Map<String, dynamic>> result = await this.getAllNotes();
+    for (Map<String, dynamic> mp in result) {
       notes.add(Note.toNote(mp));
     }
     return notes;

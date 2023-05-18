@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:sqflite/sqlite_api.dart';
+
+import 'package:notes/databasehelper.dart';
+import 'package:notes/insert_note.dart';
 
 void main() {
   runApp(const MyApp());
