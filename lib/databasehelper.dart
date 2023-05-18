@@ -54,11 +54,29 @@ class DatabaseHelper {
     Database db = await this.database;
     var result = db.rawUpdate(
       'UPDATE $tableName SET $noteTitle=?, $noteDesc=? WHERE $noteId=?',
-    (note.title, note.description, id));
+    [note.title, note.description, id]);
     return result;
   }
+
+  Future<int> deleteNote(int id) async{
+    Database db = await this.database;
+    var result = db.delete(tableName, where: '$noteId=?', whereArgs: [id]);
+    return result;
+  }
+
   Future<int?> getNoteCount() async{
     Database db = await this.database;
-    List<Map<String, dynamic>> 
+    List<Map<String, dynamic>> result =
+    await db.query('SELECT 8 FROM $tableName');
+    int? res = Sqflite.firstIntValue(result);
+  }
+
+  Future <List<Note>> getListNote() async {
+    List<Note> notes = [];
+    List <Map<String, dynamic>> result = await this.getAllNotes();
+    for (Map<String, dynamic> mp in result){
+      notes.add(Note.toNote(mp));
+    }
+    return notes;
   }
 }
