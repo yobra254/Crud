@@ -11,7 +11,8 @@ class InsertNote extends StatefulWidget {
   InsertNote(this.updateListView);
 
   @override
-  State<InsertNote> createState() => _InsertNoteState();
+  //State<InsertNote> createState() => _InsertNoteState();
+  _InsertNoteState createState() => _InsertNoteState();
 }
 
 class _InsertNoteState extends State<InsertNote> {
@@ -78,16 +79,18 @@ class _InsertNoteState extends State<InsertNote> {
                       ),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     Note note = Note(myTitle.text, myDescription.text);
-                    insertNote(context, note);
+                    var value = await databaseHelper.insertNote(note);
+                    //insertNote(context, note);
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[400],
-                      elevation: 15.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      )),
+                    backgroundColor: Colors.green[400],
+                    elevation: 15.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                 )
               ],
             ),

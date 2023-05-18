@@ -4,6 +4,8 @@ import 'package:sqflite/sqlite_api.dart';
 
 import 'package:notes/databasehelper.dart';
 import 'package:notes/insert_note.dart';
+import 'package:notes/insert_note.dart';
+import 'package:notes/note.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,8 +39,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DatabaseHelper databaseHelper = DatabaseHelper();
-  List<Note> notes;
-  int count;
+  List<Note>? notes;
+  late int count;
 
   @override
   void initState() {
