@@ -75,7 +75,7 @@ class _UpdateNoteState extends State<UpdateNote> {
             const SizedBox(
               height: 20.0,
             ),
-            ElevatedButton(
+            ElevatedButton.icon(
               icon: const Icon(
                 Icons.update,
                 color: Colors.white,
@@ -98,11 +98,54 @@ class _UpdateNoteState extends State<UpdateNote> {
                   Note note = Note(widget.note.title, myDescription.text);
                   updateNote(context, note);
                 }
+                if (myDescription.text == "") {
+                  Note note = Note(myTitle.text, widget.note.description);
+                  updateNote(context, note);
+                }
               },
-            )
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[400],
+                elevation: 15.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.white,
+                size: 30.0,
+              ),
+              label: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Delete This Note',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                deleteNote(widget.note.id!, context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                elevation: 15.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  void updateNote(BuildContext context, Note note) {}
 }

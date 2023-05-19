@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateListView() {
-    Future<Database> dbfuture = databaseHelper.initialDatabase();
+    Future<Database> dbfuture = databaseHelper.initialeDatabase();
     dbfuture.then((database) {
       Future<List<Note>> resfuture = databaseHelper.getListNote();
       resfuture.then((noteList) {
