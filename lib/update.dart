@@ -91,16 +91,20 @@ class _UpdateNoteState extends State<UpdateNote> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 print(myTitle.text);
                 print(myDescription.text);
                 if (myTitle.text == "") {
-                  Note note = Note(widget.note.title, myDescription.text);
-                  updateNote(context, note);
+                  Note note = Note(widget.note.title, widget.note.description);
+                  var value =
+                      await databaseHelper.updateNote(widget.note.id!, note);
+                  //updateNote(context, note);
                 }
                 if (myDescription.text == "") {
-                  Note note = Note(myTitle.text, widget.note.description);
-                  updateNote(context, note);
+                  Note note = Note(widget.note.title, widget.note.description);
+                  var value =
+                      await databaseHelper.updateNote(widget.note.id!, note);
+                  //updateNote(context, note);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -130,8 +134,9 @@ class _UpdateNoteState extends State<UpdateNote> {
                   ),
                 ),
               ),
-              onPressed: () {
-                deleteNote(widget.note.id!, context);
+              onPressed: () async {
+                var value = await databaseHelper.deleteNote(widget.note.id!);
+                //deleteNote(widget.note.id!, context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -147,5 +152,7 @@ class _UpdateNoteState extends State<UpdateNote> {
     );
   }
 
-  void updateNote(BuildContext context, Note note) {}
+  void updateNote(BuildContext context, Note note) async {
+    // await databaseHelper.updateNote(id, note);
+  }
 }

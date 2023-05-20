@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:notes/update.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 import 'package:notes/databasehelper.dart';
@@ -136,21 +137,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => UpdateNote(
-                                      notes[index],
+                                      notes![index],
                                       updateListView,
                                     ),
                                   ),
                                 );
                               },
                               child: ListTile(
-                                title: Text(this.notes[index].title),
-                                subtitle: Text(this.notes[index].descrition),
+                                title: Text(this.notes![index].title),
+                                subtitle: Text(this.notes![index].description),
                               ),
                             ),
                           ),
                         );
                       },
-                      itemCount: notes.length,
+                      itemCount: notes?.length,
                     ),
                   ),
                 ),
@@ -166,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
       resfuture.then((noteList) {
         setState(() {
           notes = noteList;
+          // count=notes.length
         });
       });
     });

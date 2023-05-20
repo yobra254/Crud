@@ -53,15 +53,26 @@ class _InsertNoteState extends State<InsertNote> {
                   child: TextField(
                     controller: myTitle,
                     decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.title),
+                        border: OutlineInputBorder(),
+                        hintText: "Title"),
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: myDescription,
+                    decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.note),
                         border: OutlineInputBorder(),
                         hintText: "Description"),
                     maxLength: 255,
                     keyboardType: TextInputType.text,
                   ),
-                ),
-                const SizedBox(
-                  height: 20.0,
                 ),
                 ElevatedButton.icon(
                   icon: const Icon(
@@ -82,6 +93,8 @@ class _InsertNoteState extends State<InsertNote> {
                   onPressed: () async {
                     Note note = Note(myTitle.text, myDescription.text);
                     var value = await databaseHelper.insertNote(note);
+                    print(
+                        "if 1 is return then insert success and 0 then not inserted : $value");
                     //insertNote(context, note);
                   },
                   style: ElevatedButton.styleFrom(
